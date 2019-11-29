@@ -16,11 +16,11 @@ public class HttpResponse {
 
 
 
-    public StringBuilder sendResponse(HttpResponse response) {
+    public StringBuilder resolve2String() {
         StringBuilder sendMsg = new StringBuilder();
         sendMsg.append("HTTP/1.1 200 OK\r\n")
-               .append("cache-control:"+ response.cacheControl+"\r\n")
-                .append("Content-Type:" + response.httpContentType +"\r\n")
+               .append("cache-control:"+ this.cacheControl+"\r\n")
+                .append("Content-Type:" + this.httpContentType +"\r\n")
                 .append("\r\n")
                 .append("<!DOCTYPE html><html lang=\"zh-cn\">")
                 .append("<head><meta charset=\"utf-8\"/><title>HttpServer</title></head>")
@@ -28,7 +28,7 @@ public class HttpResponse {
 
 
                sendMsg.append("</body>")
-                      .append(response.responseContent);
+                      .append(this.responseContent);
 
                 return sendMsg;
 

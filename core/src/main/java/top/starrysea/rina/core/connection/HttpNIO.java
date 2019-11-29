@@ -117,7 +117,7 @@ public class HttpNIO {
 
                 // 返回客户端
                 HttpResponse httpResponse = new HttpResponse();
-                //buffer = ByteBuffer.wrap(httpResponse.sendResponse(此处入参).toString().getBytes(charset));
+                buffer = ByteBuffer.wrap(httpResponse.resolve2String().toString().getBytes(charset));  //在此处测试
                 // 发送
                 channel.write(buffer);
 
