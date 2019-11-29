@@ -1,0 +1,36 @@
+package top.starrysea.rina.core.connection;
+
+import lombok.Data;
+import top.starrysea.rina.core.connection.entity.enums.HttpContentType;
+
+@Data
+public class HttpResponse {
+
+
+    private String cacheControl;
+    private String location;
+    private String server;
+    private String connection;
+    private String responseContent;
+    private HttpContentType httpContentType;
+
+
+
+    public StringBuilder sendResponse(HttpResponse response) {
+        StringBuilder sendMsg = new StringBuilder();
+        sendMsg.append("HTTP/1.1 200 OK\r\n")
+               .append("cache-control:"+ response.cacheControl+"\r\n")
+                .append("Content-Type:" + response.httpContentType +"\r\n")
+                .append("\r\n")
+                .append("<!DOCTYPE html><html lang=\"zh-cn\">")
+                .append("<head><meta charset=\"utf-8\"/><title>HttpServer</title></head>")
+                .append("<body><h3>服务端接收到的请求报文</h3>");
+
+
+               sendMsg.append("</body>")
+                      .append(response.responseContent);
+
+                return sendMsg;
+
+    }
+}

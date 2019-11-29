@@ -56,14 +56,17 @@ public class HttpMessageResolver {
                 break;
         }
 
-
-        String type = (String) httpMap.get("Content-Type");
-        switch (type) {
-            case "application/x-www-form-urlencoded":
-                hp.setHttpContentType(HttpContentType.valueOf("APPLICATION_X_WWW_FORM_URLENCODED"));
-                break;
+        if(StringUtil.isNotBlank((String)httpMap.get("Content-Type"))) {
+            String type = (String) httpMap.get("Content-Type");
+            switch (type) {
+                case "application/x-www-form-urlencoded":
+                    hp.setHttpContentType(HttpContentType.valueOf("APPLICATION_X_WWW_FORM_URLENCODED"));
+                    break;
+                case "text/html":
+                    hp.setHttpContentType(HttpContentType.valueOf("TEXT_HTML"));
+                    break;
+            }
         }
-
 
         hp.setHost((String) httpMap.get("Host"));
         hp.setPragma((String) httpMap.get("Pragma"));
@@ -72,12 +75,16 @@ public class HttpMessageResolver {
         hp.setSecFetchSite((String) httpMap.get("Sec-Fetch-Site"));
         hp.setSecFetchMode((String) httpMap.get("Sec-Fetch-Mode"));
         hp.setReferer((String) httpMap.get("Referer"));
-        String contentLength = (String) httpMap.get("Content-Length");
-        hp.setContentLength(Integer.valueOf(contentLength.trim()).intValue());
-        hp.setOrigin((String) httpMap.get("Origin"));
         String acceptMiddle = (String) httpMap.get("Accept");
         String acceptEncodingMiddle = (String) httpMap.get("Accept-Encoding");
         String acceptLanguageMiddle = (String) httpMap.get("Accept-Language");
+        if (StringUtil.isNotBlank(((String) httpMap.get("Content-Length")))) {
+        String contentLength = (String) httpMap.get("Content-Length");
+        hp.setContentLength(Integer.valueOf(contentLength.trim()).intValue());
+        }
+        if (StringUtil.isNotBlank(((String) httpMap.get("Origin")))) {
+            hp.setOrigin((String) httpMap.get("Origin"));
+        }
 
         //PostContent分割
         if (StringUtil.isNotBlank(((String) httpMap.get("Content-Type")))) {

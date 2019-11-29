@@ -3,6 +3,7 @@ package top.starrysea.rina.core.connection;
 import lombok.extern.slf4j.Slf4j;
 import top.starrysea.rina.core.annotation.RinaObject;
 import top.starrysea.rina.core.annotation.RinaWired;
+import top.starrysea.rina.core.connection.entity.HttpContent;
 import top.starrysea.rina.init.ServerConfig;
 import top.starrysea.rina.util.factory.RinaObjectFactory;
 import top.starrysea.rina.util.string.StringUtil;
@@ -115,24 +116,8 @@ public class HttpNIO {
 
 
                 // 返回客户端
-                StringBuilder sendMsg = new StringBuilder();
-                sendMsg.append("HTTP/1.1 200 OK\r\n");// 响应行
-                // 响应头
-                sendMsg.append("cache-control: private;\r\n")
-                        .append("content-type: text/html; charset=utf-8\r\n")
-                        .append("\r\n")
-                        // 响应体
-                        .append("<!DOCTYPE html><html lang=\"zh-cn\">")
-                        .append("<head><meta charset=\"utf-8\"/><title>测试HttpServer</title></head>")
-                        .append("<body><h3>服务端接收到的请求报文</h3>");
-                for (String line : requestContent) {
-                    sendMsg.append(line + "</br>");
-                    if (line.isEmpty()) {
-                        break;
-                    }
-                }
-                sendMsg.append("</body>");
-                buffer = ByteBuffer.wrap(sendMsg.toString().getBytes(charset));
+                HttpResponse httpResponse = new HttpResponse();
+                //buffer = ByteBuffer.wrap(httpResponse.sendResponse(此处入参).toString().getBytes(charset));
                 // 发送
                 channel.write(buffer);
 
